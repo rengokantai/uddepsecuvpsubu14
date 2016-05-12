@@ -200,3 +200,50 @@ server{
   cd .. && cd sites-enabled
   ln -s /etc/nginx/sites-available/new.conf .
   ```
+
+######
+copy ssl.key to local and decrypt
+```
+openssl rsa -in ssl.key -out ssl.key
+```
+######install startSSL certificate
+go to toolbox->retrieve certificate create crt file,copy  
+wget pem
+combine these two fileswget
+```
+cat crt pem >pem
+```
+
+redirect
+```
+return 301 http://link
+```
+ssl config:
+```
+server{
+  listen 443 default;
+  listen[::]:443 default ipv6only=on;
+  ssl on;
+  ssl_certificate /home/httpd/...pem;
+  ssl_certificate /home/...ssl.key;
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  add_header Strict-Transpost-Seciruty "max-age=30000000";
+```
+
+######Testing our SSL
+use ssllabs.com
+#####8
+######Regular maintanance
+```
+cd /etc/apt/apt.conf.d
+vim 20auto-upgrades
+```
+edit
+```
+APT::Perodic::Unattended_updtade "0";
+```
+edit csf.conf
+```
+AUTO_UPDATES ="0"
+```
+```
